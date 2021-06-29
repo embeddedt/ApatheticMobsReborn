@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "apatheticmobsreborn",
+  "version": "${version}",
+  "name": "Apathetic Mobs Reborn",
+  "description": "A reinvention of Apathetic Mobs for Minecraft 1.16+.",
+  "authors": [
+    "embeddedt"
+  ],
+  "license": "GPL-3.0",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "org.awechess1.apatheticmobsreborn.fabric.ApatheticMobsRebornModFabric"
+    ],
+    "modmenu": [
+      "org.awechess1.apatheticmobsreborn.fabric.ModMenuIntegration"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": ">=1.16.4"
+  },
+  "suggests": {
+    "flamingo": "*"
+  },
+  "mixins": [
+    "mixin.apatheticmobsreborn-common.json"
+  ]
+}

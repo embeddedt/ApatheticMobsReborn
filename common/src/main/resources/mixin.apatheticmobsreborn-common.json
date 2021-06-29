@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "org.awechess1.apatheticmobsreborn.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "LivingEntityMixin",
+    "HurtByTargetGoalMixin",
+    "UpdateAttackTargetTaskMixin",
+    "SlimeEntityMixin",
+    "MobEntityMixin",
+    "FleeEntityGoalMixin",
+    "EvokerEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,28 @@
+modLoader = "javafml"
+loaderVersion = "[35,)"
+#issueTrackerURL = ""
+license = "GPL-3.0"
+
+[[mods]]
+modId = "apatheticmobsreborn"
+version = "${version}"
+displayName = "Apathetic Mobs Reborn"
+authors = "embeddedt"
+description = '''
+A reinvention of Apathetic Mobs for Minecraft 1.16+.
+'''
+#logoFile = ""
+
+[[dependencies.apatheticmobsreborn]]
+modId = "forge"
+mandatory = true
+versionRange = "[35,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.apatheticmobsreborn]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.16.2,)"
+ordering = "NONE"
+side = "BOTH"
