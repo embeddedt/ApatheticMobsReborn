@@ -26,3 +26,10 @@ mandatory = true
 versionRange = "[1.16.2,)"
 ordering = "NONE"
 side = "BOTH"
+
+[[dependencies.apatheticmobsreborn]]
+modId = "cloth-config"
+mandatory = true
+versionRange = "[4.11.26,)"
+ordering = "NONE"
+side = "BOTH"
