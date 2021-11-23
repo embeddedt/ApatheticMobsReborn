@@ -5,6 +5,7 @@ import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.TrackTargetGoal;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import org.awechess1.apatheticmobsreborn.ApatheticMobsRebornMod;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,7 +21,7 @@ public abstract class HurtByTargetGoalMixin extends TrackTargetGoal {
     protected void handleRevengeSetTarget(MobEntity mobToAlert, LivingEntity entityToAttack, CallbackInfo ci) {
         if(mobToAlert.world.isClient)
             return;
-        if(entityToAttack instanceof PlayerEntity) {
+        if(entityToAttack instanceof PlayerEntity && !ApatheticMobsRebornMod.canTakeRevengeOnPlayer(mobToAlert, (PlayerEntity)entityToAttack)) {
             ci.cancel();
         }
     }

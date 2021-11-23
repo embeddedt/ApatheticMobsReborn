@@ -3,6 +3,7 @@ package org.awechess1.apatheticmobsreborn.mixin;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.SlimeEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 import org.awechess1.apatheticmobsreborn.ApatheticMobsRebornMod;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,9 +22,10 @@ public abstract class SlimeEntityMixin extends LivingEntity {
      * Prevent slimes from damaging players.
      */
     @Inject( method = "onPlayerCollision", at = @At("HEAD"), cancellable = true)
-    public void ignorePlayerCollision(CallbackInfo ci) {
+    public void ignorePlayerCollision(PlayerEntity player, CallbackInfo ci) {
         if(!ApatheticMobsRebornMod.considerMobForApatheticness(this))
             return;
-        ci.cancel();
+        if(!ApatheticMobsRebornMod.canTakeRevengeOnPlayer((SlimeEntity)(Object)this, player))
+            ci.cancel();
     }
 }

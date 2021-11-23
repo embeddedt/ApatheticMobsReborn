@@ -105,7 +105,7 @@ public abstract class LivingEntityMixin extends Entity implements VengefulLiving
         if(!ApatheticMobsRebornMod.considerMobForApatheticness((LivingEntity) (Object)this))
             return;
         if(cir.getReturnValue()) {
-            if(livingEntity instanceof PlayerEntity && !apatheticMobs$playersToTakeRevengeOn.contains(livingEntity.getUuid()))
+            if(livingEntity instanceof PlayerEntity && !ApatheticMobsRebornMod.canTakeRevengeOnPlayer((LivingEntity) (Object)this, (PlayerEntity)livingEntity))
                 cir.setReturnValue(false);
         }
     }
@@ -119,7 +119,7 @@ public abstract class LivingEntityMixin extends Entity implements VengefulLiving
         if(!ApatheticMobsRebornMod.considerMobForApatheticness((LivingEntity) (Object)this))
             return;
         if(cir.getReturnValue()) {
-            if(livingEntity instanceof PlayerEntity && !apatheticMobs$playersToTakeRevengeOn.contains(livingEntity.getUuid()))
+            if(livingEntity instanceof PlayerEntity && !ApatheticMobsRebornMod.canTakeRevengeOnPlayer((LivingEntity) (Object)this, (PlayerEntity)livingEntity))
                 cir.setReturnValue(false);
         }
     }

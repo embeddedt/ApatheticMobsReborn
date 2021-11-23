@@ -9,8 +9,10 @@
     "UpdateAttackTargetTaskMixin",
     "SlimeEntityMixin",
     "MobEntityMixin",
+    "MobEntityAccessor",
     "FleeEntityGoalMixin",
-    "EvokerEntityMixin"
+    "EvokerEntityMixin",
+    "TargetPredicateMixin"
   ],
   "injectors": {
     "defaultRequire": 1

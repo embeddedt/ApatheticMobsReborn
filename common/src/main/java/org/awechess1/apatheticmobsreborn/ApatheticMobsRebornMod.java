@@ -1,25 +1,46 @@
 package org.awechess1.apatheticmobsreborn;
 
 import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.registry.Registry;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 public class ApatheticMobsRebornMod {
     public static final String MOD_ID = "apatheticmobsreborn";
 
-    static ModConfig cfg = null;
+    public static ConfigHolder<ModConfig> cfgHolder = null;
+    
+    public static Set<UUID> playerUUIDs;
+    
+    private static ActionResult recomputeCachedConfigValues(ModConfig data) {
+        try {
+            playerUUIDs = data.playerList.stream().map(UUID::fromString).collect(Collectors.toSet());
+        } catch(IllegalArgumentException e) {
+            e.printStackTrace();
+            return ActionResult.FAIL;
+        }
+        return ActionResult.SUCCESS;
+    }
 
     public static ModConfig getConfig() {
-        if(cfg == null)
-            cfg = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
-        return cfg;
+        return cfgHolder.getConfig();
     }
     public static void init() {
-        AutoConfig.register(ModConfig.class, Toml4jConfigSerializer::new);
+        cfgHolder = AutoConfig.register(ModConfig.class, Toml4jConfigSerializer::new);
+        cfgHolder.registerSaveListener((manager, data) -> recomputeCachedConfigValues(data));
+        cfgHolder.registerLoadListener((manager, data) -> recomputeCachedConfigValues(data));
+        recomputeCachedConfigValues(cfgHolder.getConfig());
     }
 
     /**
@@ -42,6 +63,12 @@ public class ApatheticMobsRebornMod {
     }
 
     public static boolean canTakeRevengeOnPlayer(LivingEntity entity, PlayerEntity player) {
+        ModConfig cfg = getConfig();
+        boolean playerInList = playerUUIDs.contains(player.getUuid());
+        if(cfg.isPlayerListBlacklist && playerInList)
+            return true; /* player is blacklisted from apathetic treatment, always be apathetic towards them */
+        else if(!cfg.isPlayerListBlacklist && !playerInList)
+            return true; /* player is not in whitelist for apathetic treatment, always be apathetic towards them */
         return ((VengefulLivingEntity)entity).getPlayersToTakeRevengeOn().contains(player.getUuid());
     }
 }
