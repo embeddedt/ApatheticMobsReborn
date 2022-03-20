@@ -27,6 +27,6 @@
     "flamingo": "*"
   },
   "mixins": [
-    "mixin.apatheticmobsreborn-common.json"
+    "apatheticmobsreborn-common.mixins.json"
   ]
 }
