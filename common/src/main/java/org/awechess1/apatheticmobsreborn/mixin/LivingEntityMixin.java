@@ -5,9 +5,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.world.World;
 import org.awechess1.apatheticmobsreborn.ApatheticMobsRebornMod;
 import org.awechess1.apatheticmobsreborn.VengefulLivingEntity;
@@ -41,13 +41,13 @@ public abstract class LivingEntityMixin extends Entity implements VengefulLiving
      * @author embeddedt
      * Saves the revenge data to the entity.
      */
-    @Inject(method = "writeCustomDataToTag", at = @At(value = "TAIL"))
-    public void writeRevengeData(CompoundTag compoundTag, CallbackInfo ci) {
+    @Inject(method = "writeCustomDataToNbt", at = @At(value = "TAIL"))
+    public void writeRevengeData(NbtCompound compoundTag, CallbackInfo ci) {
         if (!this.apatheticMobs$playersToTakeRevengeOn.isEmpty()) {
-            ListTag listTag = new ListTag();
+            NbtList listTag = new NbtList();
 
             for (UUID uuid : apatheticMobs$playersToTakeRevengeOn) {
-                CompoundTag uuidTag = new CompoundTag();
+                NbtCompound uuidTag = new NbtCompound();
                 uuidTag.putUuid("UUID", uuid);
                 listTag.add(uuidTag);
             }
@@ -60,12 +60,12 @@ public abstract class LivingEntityMixin extends Entity implements VengefulLiving
      * @author embeddedt
      * Loads the revenge data from the entity.
      */
-    @Inject(method = "readCustomDataFromTag", at = @At(value = "TAIL"))
-    public void readRevengeData(CompoundTag compoundTag, CallbackInfo ci) {
+    @Inject(method = "readCustomDataFromNbt", at = @At(value = "TAIL"))
+    public void readRevengeData(NbtCompound compoundTag, CallbackInfo ci) {
         if (compoundTag.contains("ApatheticMobs_PlayerRevenge", 9) && this.world != null && !this.world.isClient) {
-            ListTag revengeListTag = compoundTag.getList("ApatheticMobs_PlayerRevenge", 10);
+            NbtList revengeListTag = compoundTag.getList("ApatheticMobs_PlayerRevenge", 10);
             for(int i = 0; i < revengeListTag.size(); ++i) {
-                CompoundTag uuidTag = revengeListTag.getCompound(i);
+                NbtCompound uuidTag = revengeListTag.getCompound(i);
                 UUID uuid = uuidTag.getUuid("UUID");
                 if(uuid != null)
                     apatheticMobs$playersToTakeRevengeOn.add(uuid);

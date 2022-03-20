@@ -24,7 +24,7 @@ configurations {
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
 
-    modApi "me.shedaniel.cloth:cloth-config-forge:4.11.26"
+    modApi "me.shedaniel.cloth:cloth-config-forge:6.2.57"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }

@@ -3,17 +3,13 @@ dependencies {
     // Do NOT use other classes from fabric loader
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
 
-    modApi("me.shedaniel.cloth:cloth-config:4.11.26") {
+    modApi("me.shedaniel.cloth:cloth-config:6.2.57") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 }
 
 architectury {
     common()
-}
-
-java {
-    withSourcesJar()
 }
 
 publishing {

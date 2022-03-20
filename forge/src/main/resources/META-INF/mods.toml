@@ -16,19 +16,19 @@ A reinvention of Apathetic Mobs for Minecraft 1.16+.
 [[dependencies.apatheticmobsreborn]]
 modId = "forge"
 mandatory = true
-versionRange = "[35,)"
+versionRange = "[39,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.apatheticmobsreborn]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.16.2,)"
+versionRange = "[1.18.1,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.apatheticmobsreborn]]
-modId = "cloth-config"
+modId = "cloth_config"
 mandatory = true
 versionRange = "[4.11.26,)"
 ordering = "NONE"
