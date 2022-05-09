@@ -6,6 +6,7 @@ import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
+import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.registry.Registry;
@@ -47,7 +48,8 @@ public class ApatheticMobsRebornMod {
      * Checks whether an entity should act apathetic, excluding the revenge case.
      *
      * If the difficulty or entity type is blacklisted, returns false. Otherwise, returns true.
-     * An exception is made for the ender dragon, which is never apathetic (to allow collecting dragon's breath).
+     * An exception is made for the ender dragon, which is never apathetic (to allow collecting dragon's breath), as
+     * well as passive mobs.
      * @param entity An entity to check
      * @return
      */
@@ -59,7 +61,7 @@ public class ApatheticMobsRebornMod {
             return false;
         if(getConfig().blacklistMobs.contains(Registry.ENTITY_TYPE.getKey(entity.getType()).toString()))
             return false;
-        return !(entity instanceof EnderDragonEntity);
+        return !(entity instanceof EnderDragonEntity) && !(entity instanceof PassiveEntity);
     }
 
     public static boolean canTakeRevengeOnPlayer(LivingEntity entity, PlayerEntity player) {
