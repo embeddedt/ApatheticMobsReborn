@@ -14,6 +14,10 @@ public class ModConfig implements ConfigData {
     public List<String> blacklistMobs = new ArrayList<>(Collections.singletonList(
             "minecraft:pig"
     ));
+
+    @Comment("If 'true', the list above is considered to be a blacklist, and these mobs will be ignored.\r\nIf 'false', the list is a whitelist and only these mobs will be apathetic.")
+    public boolean isMobListBlacklist = true;
+
     @Comment("Difficulty levels which will be ignored by this mod.")
     public List<String> blacklistDifficulties = new ArrayList<>(Collections.singletonList(
             "peaceful"

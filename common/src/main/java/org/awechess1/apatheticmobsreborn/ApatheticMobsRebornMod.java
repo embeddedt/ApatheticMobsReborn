@@ -59,7 +59,10 @@ public class ApatheticMobsRebornMod {
         }
         if(getConfig().blacklistDifficulties.contains(entity.world.getServer().getSaveProperties().getDifficulty().getName()))
             return false;
-        if(getConfig().blacklistMobs.contains(Registry.ENTITY_TYPE.getKey(entity.getType()).toString()))
+        boolean mobInList = getConfig().blacklistMobs.contains(Registry.ENTITY_TYPE.getKey(entity.getType()).toString());
+        if(getConfig().isMobListBlacklist && mobInList)
+            return false;
+        else if(!getConfig().isMobListBlacklist && !mobInList)
             return false;
         return !(entity instanceof EnderDragonEntity) && !(entity instanceof PassiveEntity);
     }
