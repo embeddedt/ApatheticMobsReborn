@@ -12,7 +12,8 @@
     "MobEntityAccessor",
     "FleeEntityGoalMixin",
     "EvokerEntityMixin",
-    "TargetPredicateMixin"
+    "TargetPredicateMixin",
+    "WardenEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
