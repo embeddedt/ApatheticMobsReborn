@@ -3,12 +3,15 @@ package org.awechess1.apatheticmobsreborn;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
+import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 import java.util.HashSet;
@@ -23,10 +26,13 @@ public class ApatheticMobsRebornMod {
     public static ConfigHolder<ModConfig> cfgHolder = null;
     
     public static Set<UUID> playerUUIDs;
+
+    public static Set<EntityType> hostileOverrideEntities;
     
     private static ActionResult recomputeCachedConfigValues(ModConfig data) {
         try {
             playerUUIDs = data.playerList.stream().map(UUID::fromString).collect(Collectors.toSet());
+            hostileOverrideEntities = data.hostileOverrideEntities.stream().map(n -> Registry.ENTITY_TYPE.get(new Identifier(n))).collect(Collectors.toSet());
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
             return ActionResult.FAIL;
@@ -64,7 +70,7 @@ public class ApatheticMobsRebornMod {
             return false;
         else if(!getConfig().isMobListBlacklist && !mobInList)
             return false;
-        return !(entity instanceof EnderDragonEntity) && !(entity instanceof PassiveEntity);
+        return !(entity instanceof EnderDragonEntity) && (!(entity instanceof PassiveEntity) || entity instanceof Monster);
     }
 
     public static boolean canTakeRevengeOnPlayer(LivingEntity entity, PlayerEntity player) {
@@ -75,5 +81,8 @@ public class ApatheticMobsRebornMod {
         else if(!cfg.isPlayerListBlacklist && !playerInList)
             return true; /* player is not in whitelist for apathetic treatment, always be apathetic towards them */
         return ((VengefulLivingEntity)entity).getPlayersToTakeRevengeOn().contains(player.getUuid());
+    }
+    public static boolean isHostileOverride(LivingEntity entity) {
+        return entity instanceof Monster || hostileOverrideEntities.contains(entity.getType());
     }
 }

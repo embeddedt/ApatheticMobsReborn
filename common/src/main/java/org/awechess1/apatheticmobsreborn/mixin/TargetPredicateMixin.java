@@ -16,7 +16,7 @@ public class TargetPredicateMixin {
     public void testApatheticness(LivingEntity baseEntity, LivingEntity targetEntity, CallbackInfoReturnable<Boolean> cir) {
         if(baseEntity != targetEntity && baseEntity != null && targetEntity instanceof PlayerEntity) {
             /* Check if mob is a non-peaceful mob and is allowed to be apathetic */
-            if(baseEntity instanceof MobEntity && ((MobEntityAccessor)baseEntity).invokeDisallowedInPeaceful() && ApatheticMobsRebornMod.considerMobForApatheticness(baseEntity)) {
+            if(baseEntity instanceof MobEntity && (((MobEntityAccessor)baseEntity).invokeDisallowedInPeaceful()||ApatheticMobsRebornMod.isHostileOverride(baseEntity)) && ApatheticMobsRebornMod.considerMobForApatheticness(baseEntity)) {
                 /* Check if taking revenge on the player is allowed */
                 if(ApatheticMobsRebornMod.canTakeRevengeOnPlayer(baseEntity, (PlayerEntity)targetEntity)) {
                     return; /* Allow vanilla behavior */
