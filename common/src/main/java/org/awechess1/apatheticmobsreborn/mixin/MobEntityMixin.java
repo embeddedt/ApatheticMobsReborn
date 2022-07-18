@@ -20,6 +20,8 @@ public abstract class MobEntityMixin extends LivingEntity {
 
     @Inject( method = "setTarget", at = @At("HEAD"), cancellable = true)
     public void onlyTargetNemesis(@Nullable LivingEntity target, CallbackInfo ci) {
+        if(!ApatheticMobsRebornMod.considerMobForApatheticness((LivingEntity) (Object)this))
+            return;
         if(target instanceof PlayerEntity) {
             if(!ApatheticMobsRebornMod.canTakeRevengeOnPlayer(this, (PlayerEntity)target)) {
                 ci.cancel();

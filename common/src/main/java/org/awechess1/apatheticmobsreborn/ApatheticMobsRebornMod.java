@@ -13,6 +13,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -65,7 +66,7 @@ public class ApatheticMobsRebornMod {
         }
         if(getConfig().blacklistDifficulties.contains(entity.world.getServer().getSaveProperties().getDifficulty().getName()))
             return false;
-        boolean mobInList = getConfig().blacklistMobs.contains(Registry.ENTITY_TYPE.getKey(entity.getType()).toString());
+        boolean mobInList = getConfig().blacklistMobs.contains(Registry.ENTITY_TYPE.getId(entity.getType()).toString());
         if(getConfig().isMobListBlacklist && mobInList)
             return false;
         else if(!getConfig().isMobListBlacklist && !mobInList)
